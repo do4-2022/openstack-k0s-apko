@@ -1,0 +1,27 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cinder-csi
+spec:
+  serviceAccountName: helm-controller
+  interval: 30m
+  chart:
+    spec:
+      chart: openstack-cinder-csi
+      version: "*"
+      sourceRef:
+        kind: HelmRepository
+        name: cinder-csi
+      interval: 12h
+  values:
+    secret:
+      enabled: true
+      name: os-cloud-credentials
+    csi:
+      plugin:
+        nodePlugin:
+          kubeletDir: /var/lib/k0s/kubelet
+    storageClass:
+      delete:
+        isDefault: true
