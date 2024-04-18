@@ -5,3 +5,4 @@ namespace: flux-system
 resources:
   - infrastructure/controllers.yaml
   - infrastructure/configurations.yaml
+  - tenants/hello-world-team.yaml
