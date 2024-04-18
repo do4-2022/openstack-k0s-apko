@@ -1,0 +1,27 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: check-image-signature
+spec:
+  validationFailureAction: Enforce
+  background: false
+  webhookTimeoutSeconds: 30
+  failurePolicy: Fail
+  rules:
+    - name: check-image-signature
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      verifyImages:
+        - imageReferences:
+            - "ghcr.io/do4-2022/openstack-k0s-apko*"
+          attestors:
+            - count: 1
+              entries:
+                - keyless:
+                    subject: "https://github.com/do4-2022/openstack-k0s-apko/.github/workflows/ci.yaml@refs/heads/main"
+                    issuer: "https://token.actions.githubusercontent.com"
+                    rekor:
+                      url: https://rekor.sigstore.dev

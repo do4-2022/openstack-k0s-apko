@@ -4,3 +4,4 @@ namespace: flux-system
 
 resources:
   - cert-manager-issuer/cluster-issuer.yaml
+  - kyverno-policies/check-image-signature.yaml
