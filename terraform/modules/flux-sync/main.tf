@@ -1,5 +1,5 @@
 resource "helm_release" "this" {
-  name = "${var.name}-flux-sync"
+  name = var.name
 
   repository = "https://fluxcd-community.github.io/helm-charts"
   chart      = "flux2-sync"
