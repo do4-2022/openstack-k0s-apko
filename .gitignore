@@ -87,3 +87,12 @@ terraform.tfstate.*
 
 # kubernetes
 *kubeconfig.yaml
+
+# melange and apko
+*.apko
+*.melange
+*.rsa
+*.rsa.pub
+apps/**/packages
+apps/**/sbom-*.json
+apps/**/sbom-*.cdx
