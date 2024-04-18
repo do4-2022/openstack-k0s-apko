@@ -1,0 +1,29 @@
+package:
+  name: hello-world
+  version: 0.1.0
+  description: simple hello world web server
+  epoch: 1713427965
+  target-architecture:
+    - x86_64
+    - aarch64
+  copyright:
+    - license: Apache-2.0
+      paths:
+        - "*"
+
+environment:
+  contents:
+    repositories:
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    packages:
+      - ca-certificates-bundle
+      - wolfi-base
+
+pipeline:
+  - uses: go/build
+    with:
+      modroot: .
+      packages: .
+      output: hello-world-server
