@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: hello-world-team
+  namespace: hello-world-app
+spec:
+  interval: 5m
+  ref:
+    branch: main
+  url: https://github.com/do4-2022/openstack-k0s-apko
