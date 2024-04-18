@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-world
+  annotations:
+    cert-manager.io/cluster-issuer: cluster-issuer
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: hello-world.apko.do-2021.fr
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: hello-world
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - hello-world.apko.do-2021.fr
+      secretName: hello-world.apko.do-2021.fr
