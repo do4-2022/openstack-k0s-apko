@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: openstack-cloud-controller-manager
-      version: "*"
+      version: "2.29.2"
       sourceRef:
         kind: HelmRepository
         name: cloud-controller-manager
