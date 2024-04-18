@@ -21,3 +21,9 @@ resource "kubernetes_namespace_v1" "kyverno" {
     name = "kyverno"
   }
 }
+
+resource "kubernetes_namespace_v1" "harbor" {
+  metadata {
+    name = "harbor"
+  }
+}
