@@ -142,3 +142,17 @@ module "flux-sync-infrastructure" {
   cluster_config_client_certificate     = base64decode(local.kube_config.users[0].user.client-certificate-data)
   cluster_config_client_key             = base64decode(local.kube_config.users[0].user.client-key-data)
 }
+
+module "flux-sync-hello-world-team" {
+  source = "./modules/flux-sync"
+
+  name                 = "hello-world-team"
+  path                 = "tenants/hello-world-team"
+  namespace            = "flux-system"
+  service_account_name = "kustomize-controller"
+
+  cluster_config_endpoint               = local.kube_config.clusters[0].cluster.server
+  cluster_config_cluster_ca_certificate = base64decode(local.kube_config.clusters[0].cluster.certificate-authority-data)
+  cluster_config_client_certificate     = base64decode(local.kube_config.users[0].user.client-certificate-data)
+  cluster_config_client_key             = base64decode(local.kube_config.users[0].user.client-key-data)
+}
