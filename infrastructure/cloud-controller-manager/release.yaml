@@ -5,6 +5,7 @@ metadata:
   name: cloud-controller-manager
 spec:
   serviceAccountName: helm-controller
+  targetNamespace: kube-system
   interval: 30m
   chart:
     spec:

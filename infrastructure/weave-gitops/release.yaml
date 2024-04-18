@@ -4,11 +4,12 @@ metadata:
   name: weave-gitops
 spec:
   serviceAccountName: helm-controller
+  targetNamespace: flux-system
   interval: 50m
   chart:
     spec:
       chart: weave-gitops
-      version: "*"
+      version: "4.0.36"
       sourceRef:
         kind: HelmRepository
         name: weave-gitops

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: flux-system
+
+resources:
+  - cinder-csi/release.yaml
+  - cinder-csi/repository.yaml
+  - cloud-controller-manager/release.yaml
+  - cloud-controller-manager/repository.yaml
+  - weave-gitops/release.yaml
+  - weave-gitops/repository.yaml
