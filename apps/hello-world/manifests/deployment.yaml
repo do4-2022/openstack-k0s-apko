@@ -21,6 +21,9 @@ spec:
         - name: hello-world
           image: ghcr.io/do4-2022/openstack-k0s-apko/hello-world:ee5ffa6
           imagePullPolicy: IfNotPresent
+          env:
+            - name: GIN_MODE
+              value: "release"
           ports:
             - name: http
               containerPort: 8080
