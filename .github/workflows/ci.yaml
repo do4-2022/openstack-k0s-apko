@@ -45,9 +45,9 @@ jobs:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2.1.0
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ${{ secrets.DOCKER_REGISTRY_URL }}
+          username: ${{ secrets.DOCKER_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
       - name: Generate temporary signing key
         uses: chainguard-dev/actions/melange-keygen@main
@@ -71,9 +71,9 @@ jobs:
           apko-image: ghcr.io/wolfi-dev/apko:latest
           config: ${{ github.workspace }}/apps/${{ matrix.app }}/apko.yaml
           keyring-append: ${{ github.workspace }}/melange.rsa.pub
-          tag: ghcr.io/${{ github.repository }}/${{ matrix.app }}:${{ steps.vars.outputs.sha_short }}
-          generic-user: ${{ github.actor }}
-          generic-pass: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ secrets.DOCKER_REGISTRY_URL }}/${{ github.repository }}/${{ matrix.app }}:${{ steps.vars.outputs.sha_short }}
+          generic-user: ${{ secrets.DOCKER_REGISTRY_USER }}
+          generic-pass: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
       - name: Sign the images with GitHub OIDC Token
         run: |
