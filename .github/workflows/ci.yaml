@@ -1,0 +1,63 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/ci.yaml
+      - apps/**
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: ["hello-world"]
+    concurrency:
+      group: ci
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+        with:
+          fetch-depth: 1
+
+      - name: Set outputs
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Install melange
+        uses: chainguard-dev/actions/setup-melange@main
+
+      - name: Generate temporary signing key
+        uses: chainguard-dev/actions/melange-keygen@main
+        with:
+          signing-key-path: ${{ github.workspace }}/melange.rsa
+
+      - name: Build and package app
+        uses: chainguard-dev/actions/melange-build-pkg@main
+        with:
+          workdir: apps/${{ matrix.app }}
+          config: ${{ github.workspace }}/apps/${{ matrix.app }}/melange.yaml
+          archs: x86_64,aarch64
+          repository-path: ${{ github.workspace }}/packages
+          sign-with-key: true
+          signing-key-path: ${{ github.workspace }}/melange.rsa
+
+      - name: Construct OCI image and publish
+        uses: distroless/actions/apko-publish@main
+        with:
+          apko-image: ghcr.io/wolfi-dev/apko:latest
+          config: ${{ github.workspace }}/apps/${{ matrix.app }}/apko.yaml
+          keyring-append: ${{ github.workspace }}/melange.rsa.pub
+          tag: ghcr.io/${{ github.repository }}/${{ matrix.app }}:${{ steps.vars.outputs.sha_short }}
+          generic-user: ${{ github.actor }}
+          generic-pass: ${{ secrets.GITHUB_TOKEN }}
