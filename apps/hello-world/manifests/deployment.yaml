@@ -19,7 +19,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: hello-world
-          image: ghcr.io/do4-2022/openstack-k0s-apko/hello-world:ee5ffa6
+          image: harbor.apko.do-2021.fr/do4-2022/openstack-k0s-apko/hello-world:ee5ffa6
           imagePullPolicy: IfNotPresent
           env:
             - name: GIN_MODE
