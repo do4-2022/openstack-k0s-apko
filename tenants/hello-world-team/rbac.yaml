@@ -8,6 +8,24 @@ metadata:
   namespace: hello-world-app
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    toolkit.fluxcd.io/tenant: hello-world-team
+  name: hello-world-team-role
+  namespace: hello-world-app
+rules:
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apps", "extensions"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
@@ -16,12 +34,9 @@ metadata:
   namespace: hello-world-app
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
+  kind: Role
+  name: hello-world-team-role
 subjects:
-  - apiGroup: rbac.authorization.k8s.io
-    kind: User
-    name: gotk:hello-world-team:reconciler
   - kind: ServiceAccount
     name: hello-world-team
     namespace: hello-world-app
