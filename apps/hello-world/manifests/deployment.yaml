@@ -15,12 +15,12 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: hello-world
-        app.kubernetes.io/version: 8bd6c7f
+        app.kubernetes.io/version: 11f7fb4
     spec:
       automountServiceAccountToken: false
       containers:
         - name: hello-world
-          image: harbor.apko.do-2021.fr/do4-2022/openstack-k0s-apko/hello-world:8bd6c7f
+          image: harbor.apko.do-2021.fr/do4-2022/openstack-k0s-apko/hello-world:11f7fb4
           imagePullPolicy: IfNotPresent
           env:
             - name: GIN_MODE
