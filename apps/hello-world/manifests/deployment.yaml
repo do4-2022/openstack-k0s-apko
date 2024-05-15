@@ -35,3 +35,8 @@ spec:
             limits:
               memory: "128Mi"
               cpu: "250m"
+      securityContext:
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        allowPrivilegeEscalation: false
