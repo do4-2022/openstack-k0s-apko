@@ -95,6 +95,7 @@ jobs:
       - name: Bump version
         run: |
           sed -i 's|image: harbor.apko.do-2021.fr/do4-2022/openstack-k0s-apko/hello-world:[^ ]*|image: harbor.apko.do-2021.fr/do4-2022/openstack-k0s-apko/hello-world:${{ steps.vars.outputs.sha_short }}|' apps/hello-world/manifests/deployment.yaml
+          sed -i 's|app.kubernetes.io/version: [^ ]*|app.kubernetes.io/version: ${{ steps.vars.outputs.sha_short }}|' apps/hello-world/manifests/deployment.yaml
 
       - name: Commit version bump
         uses: stefanzweifel/git-auto-commit-action@v4
