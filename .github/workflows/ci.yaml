@@ -68,7 +68,6 @@ jobs:
         name: Construct OCI image and publish
         uses: distroless/actions/apko-publish@main
         with:
-          apko-image: ghcr.io/wolfi-dev/apko:latest
           config: ${{ github.workspace }}/apps/${{ matrix.app }}/apko.yaml
           keyring-append: ${{ github.workspace }}/melange.rsa.pub
           tag: ${{ secrets.DOCKER_REGISTRY_URL }}/${{ github.repository }}/${{ matrix.app }}:${{ steps.vars.outputs.sha_short }}
