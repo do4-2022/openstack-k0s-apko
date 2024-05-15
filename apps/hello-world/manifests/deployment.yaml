@@ -28,4 +28,10 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
-          resources: {}
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
