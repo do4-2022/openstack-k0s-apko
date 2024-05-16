@@ -16,7 +16,7 @@ spec:
                 - Pod
       verifyImages:
         - imageReferences:
-            - "ghcr.io/do4-2022/openstack-k0s-apko*"
+            - "harbor.apko.do-2021.fr/do4-2022/openstack-k0s-apko*"
           attestors:
             - count: 1
               entries:
